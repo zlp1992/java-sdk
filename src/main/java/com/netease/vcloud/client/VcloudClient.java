@@ -6,6 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.netease.vcloud.manager.VideoManagerService;
+import com.netease.vcloud.manager.impl.VideoManagerServiceImpl;
+import com.netease.vcloud.manager.param.DeleteSingleVideoParam;
+import com.netease.vcloud.manager.param.QueryVideoInfoParam;
+import com.netease.vcloud.manager.param.TranscodingTemplateParam;
+import com.netease.vcloud.manager.param.TranscodingVideoParam;
 import org.apache.log4j.Logger;
 
 import com.netease.vcloud.ClientConfiguration;
@@ -265,6 +271,21 @@ public class VcloudClient {
 		UploadVideoService uploadVideoService = new UploadVideoServiceImpl();
 		return uploadVideoService.uploadVideo(filePath, initParamMap);
 	}
+	/**
+	 *
+	 * <p>Title: uploadVideo</p>
+	 * <p>Description: 简单的视频上传</p>
+	 * @param filePath       上传文件路径
+	 * @param fileName   文件名（必须包含后缀）
+	 * @return 视频上传成功，则返回根据对象名查询视频ID输出参数的封装类，否则返回null
+	 * @throws VcloudException
+	 * @throws IOException
+	 */
+	public QueryVideoIDorWatermarkIDParam uploadVideo(String filePath, String fileName)throws IOException, VcloudException{
+		Map<String,Object> initParamMap=new HashMap<String, Object>();
+		initParamMap.put("originFileName",fileName);
+		return uploadVideo(filePath,initParamMap);
+	}
 	
 	/**
 	 * 
@@ -301,8 +322,15 @@ public class VcloudClient {
 		return this.uploadVideo(filePath, initParamMap);
 	}
 	
-	
-	
+	/**
+	 * 上传文件并转码
+	 * @param filePath        上传文件路径
+	 * @param originFileName  上传文件的原始名称（包含后缀名）
+	 * @param presetId        视频所需转码模板ID（不填写为默认模板即不转码）
+	 * */
+	public QueryVideoIDorWatermarkIDParam uploadVideoAndTranscoding(String filePath,String originFileName,Long presetId)throws IOException, VcloudException{
+		return uploadVideo(filePath,originFileName,null,null,presetId,null,null,null,null,null);
+	}
 	/**
 	 * 
 	 * <p>Title: uploadVideoWithRecorder</p>
@@ -333,5 +361,62 @@ public class VcloudClient {
 		SetCallbackService setCallbackService = new SetCallbackServiceImpl();
 		return setCallbackService.setCallback(callbackUrl);
 	}
-	
+
+
+	/**
+	 *
+	 * <p>Title: deleteSingleVideo</p>
+	 * <p>Description: 删除单个视频源文件</p>
+	 * @param vid 视频唯一id
+	 * @return DeleteSingleVideoParam 删除视频的结果
+	 * @throws VcloudException
+	 * @throws IOException
+	 */
+	public DeleteSingleVideoParam deleteSingleVideo(String vid) throws IOException, VcloudException{
+		VideoManagerService managerService = new VideoManagerServiceImpl();
+		return managerService.deleteSingleVideo(vid);
+	}
+
+	/**
+	 *
+	 * <p>Title: querySingleVideo</p>
+	 * <p>Description: 查询单个视频文件</p>
+	 * @param vid 视频唯一id
+	 * @return DeleteSingleVideoParam 查询视频的结果
+	 * @throws VcloudException
+	 * @throws IOException
+	 */
+	public QueryVideoInfoParam querySingleVideo(String vid) throws IOException, VcloudException{
+		VideoManagerService managerService = new VideoManagerServiceImpl();
+		return managerService.querySingelVideo(vid);
+	}
+
+	/**
+	 * 创建视频转码模板
+	 * @param presetName 视频转码模板的名称
+	 * @param hdFlv 是否需要标清flv格式
+	 * @param hdMp4 是否需要标清MP4格式
+	 * @return 转码模板信息，其中的模板id可保存后续使用
+	 * */
+	public TranscodingVideoParam createTranscodingTemplate(String presetName, boolean hdMp4, boolean hdFlv)throws IOException, VcloudException{
+		VideoManagerService managerService = new VideoManagerServiceImpl();
+		return managerService.createTranscodingTemplate(presetName,hdMp4,hdFlv);
+	}
+
+	/**
+	 * 获取所有的转码模板
+	 * */
+	public List<TranscodingTemplateParam> getAllTranscodingTemplate()throws IOException, VcloudException{
+		VideoManagerService managerService = new VideoManagerServiceImpl();
+		return managerService.getAllTranscodingTemplate();
+	}
+	/**
+	 * 如果对应名称的视频转码模板存在的话则返回此模板的id
+	 * @param presetName 转码模板名称
+	 * @return 如果存在则返回模板id,否则返回<code>null</code>
+	 * */
+	public String getPresetIdIfExist(String presetName)throws IOException, VcloudException{
+		VideoManagerService managerService = new VideoManagerServiceImpl();
+		return managerService.getPresetIdIfExist(presetName);
+	}
 }

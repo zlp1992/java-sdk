@@ -31,52 +31,45 @@
 			<groupId>org.apache.httpcomponents.client5</groupId>
 			<artifactId>httpclient5-cache</artifactId>
 			<version>5.0-alpha1</version>
-			<!-- <scope>provided</scope> -->
+			 <scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.7</version>
-			<!-- <scope>provided</scope> -->
+			 <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
 			<version>4.5.2</version>
-			<!-- <scope>provided</scope> -->
+			 <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>fluent-hc</artifactId>
 			<version>4.5.2</version>
-			<!-- <scope>provided</scope> -->
+			 <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
-			<!-- <scope>provided</scope> -->
+			 <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
-			<!-- <scope>provided</scope> -->
+			 <scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.5</version>
-			<!-- <scope>provided</scope> -->
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-			<!-- <scope>provided</scope> -->
+			 <scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
